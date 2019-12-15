@@ -965,17 +965,18 @@ while True:
 							await client.get_channel(channel).send('```' + bossData[i][0] + '탐이 아직 안됐습니다. 다음 ' + bossData[i][0] + '탐 [' + tmp_bossTimeString[i] + '] 입니다```', tts=False)
 
 					
-			##################################
+##################################
 
 			for i in range(bossNum):
-				if message.content.startswith(bossData[i][0] +'예상'):
+				if message.content.startswith(bossData[i][0], 4, 8):
 					if hello.find('  ') != -1 :
 						bossData[i][6] = hello[hello.find('  ')+2:]
 						hello = hello[:hello.find('  ')]
+						hello = filter(str.isdigit,hello))
 					else:
 						bossData[i][6] = ''
 						
-					tmp_msg = bossData[i][0] +'예상'
+					tmp_msg = bossData[i][0]
 					if len(hello) > len(tmp_msg) + 3 :
 						if hello.find(':') != -1 :
 							chkpos = hello.find(':')
@@ -985,7 +986,8 @@ while True:
 							tmp_now = datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting[0]))
 							tmp_now = tmp_now.replace(hour=int(hours1), minute=int(minutes1))
 						else:
-							chkpos = len(hello)-2
+							i = filter(str.isdigit,hello))
+							chkpos = len(i)-2
 							hours1 = hello[chkpos-2:chkpos]
 							minutes1 = hello[chkpos:chkpos+2]
 							now2 = datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting[0]))
@@ -1012,6 +1014,7 @@ while True:
 						await client.get_channel(channel).send(bossData[i][0] +' 예상 시간을 입력해주세요.', tts=False)
 						
 			##################################
+
 					
 				if message.content == bossData[i][0] +'삭제':
 					bossTime[i] = datetime.datetime.now()+datetime.timedelta(days=365, hours = int(basicSetting[0]))
